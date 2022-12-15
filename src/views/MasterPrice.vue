@@ -28,6 +28,7 @@
     <hr class="border-1 border-blue-800 cursor-pointer duration-500" />
     <div class="flex justify-center my-3">
       <form @submit.prevent="searchFlight" className="">
+        <span class="text-xl mr-5 font-bold">Travel From</span>
         <select
           name="from"
           v-model="from"
@@ -61,9 +62,7 @@
           <option value="2022-11-24">2022-11-24</option>
         </select>
         <span className=" ml-10">
-          <button type="submit" className="btn pt-1 btn-sm btn-primary">
-            SEARCH
-          </button>
+          <button type="submit" className="btn btn-primary">SEARCH</button>
         </span>
       </form>
     </div>
