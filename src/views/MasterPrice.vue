@@ -27,34 +27,32 @@
     </div>
     <hr class="border-1 border-blue-800 cursor-pointer duration-500" />
     <div class="flex justify-center my-3">
-      <form className="">
+      <form @submit.prevent="searchFlight" className="">
         <select
           name="from"
+          v-model="from"
           className="select border-2 border-indigo-600 w-fit "
         >
           <option disabled selected>From?</option>
-          <option
-            v-for="(route, index) of routes"
-            :key="index"
-            value="{{route}}"
-          >
+          <option v-for="(route, index) of routes" :key="index" :value="route">
             {{ route }}
           </option>
         </select>
         <span class="font-bold"> - TO - </span>
-        <select name="to" className="select border-2 border-indigo-600 w-fit ">
+        <select
+          name="to"
+          v-model="to"
+          className="select border-2 border-indigo-600 w-fit "
+        >
           <option disabled selected>To?</option>
-          <option
-            v-for="(route, index) of routes"
-            :key="index"
-            value="{{route}}"
-          >
+          <option v-for="(route, index) of routes" :key="index" :value="route">
             {{ route }}
           </option>
         </select>
         <span class="font-bold"> - DATE - </span>
         <select
-          name="select"
+          name="date"
+          v-model="date"
           className="select border-2 border-indigo-600 w-fit "
         >
           <option disabled selected>Travel Date?</option>
@@ -63,14 +61,30 @@
           <option value="2022-11-24">2022-11-24</option>
         </select>
         <span className=" ml-10">
-          <button className="btn pt-1 btn-sm btn-primary">SEARCH</button>
+          <button type="submit" className="btn pt-1 btn-sm btn-primary">
+            SEARCH
+          </button>
         </span>
       </form>
     </div>
     <hr class="border-1 border-blue-800 cursor-pointer duration-500" />
-    <div class="h-[50vh] bg-slate-400 my-10 flex justify-center items-center">
+    <div v-if="tableView">
+      <DataTable v-bind:flights="flights" :errors="errors" />
+    </div>
+    <div
+      v-if="dataSearch"
+      class="h-[50vh] bg-slate-400 my-10 flex justify-center items-center"
+    >
       <div>
         <h2 class="text-4xl font-bold">Please Search Your Flight</h2>
+      </div>
+    </div>
+    <div
+      v-if="noData"
+      class="h-[50vh] bg-slate-400 my-10 flex justify-center items-center"
+    >
+      <div>
+        <h2 class="text-4xl font-bold">Sorry Flight Not Found</h2>
       </div>
     </div>
   </div>
@@ -80,14 +94,21 @@
 
 <script>
 import axios from "axios";
+import DataTable from "@/views/DataTable.vue";
 
 export default {
   name: "MasterPrice",
-
+  components: {
+    DataTable,
+  },
   data() {
     return {
+      noData: false,
+      tableView: false,
+      dataSearch: true,
       routes: [],
       errors: [],
+      flights: [],
     };
   },
   created() {
@@ -99,6 +120,37 @@ export default {
       .catch((e) => {
         this.errors.push(e);
       });
+  },
+  methods: {
+    searchFlight() {
+      const from = this.from;
+      const to = this.to;
+      const date = this.date;
+      const data = { from, to, date };
+      console.log(data);
+      fetch("http://localhost:5000/flights", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.length > 0) {
+            this.flights = [...data];
+            console.log(data);
+            this.dataSearch = false;
+            this.tableView = true;
+            this.noData = false;
+          } else {
+            this.noData = true;
+            this.tableView = false;
+            this.dataSearch = false;
+          }
+        })
+        .catch((err) => console.log(err));
+    },
   },
 };
 </script>
