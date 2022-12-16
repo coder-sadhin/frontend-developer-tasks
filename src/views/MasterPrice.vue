@@ -112,7 +112,7 @@ export default {
   },
   created() {
     axios
-      .get(`http://localhost:5000/routes`)
+      .get(`https://flights-server.vercel.app/routes`)
       .then((res) => {
         this.routes = res.data;
       })
@@ -127,7 +127,7 @@ export default {
       const date = this.date;
       const data = { from, to, date };
       console.log(data);
-      fetch("http://localhost:5000/flights", {
+      fetch("https://flights-server.vercel.app/flights", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

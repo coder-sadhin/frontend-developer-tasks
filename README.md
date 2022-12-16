@@ -1,24 +1,17 @@
-# frontend-developer-tasks
+# frontend-developer-tasks-Live site
+
 
 ## Project setup
+first clone this repo on your computer: https://github.com/coder-sadhin/frontend-developer-tasks
 ```
-npm install
+Run your command pad: npm install
 ```
+```
+For run this code on live: npm run serve
+```
+### about 
+``
+Server repo: https://github.com/coder-sadhin/flights-server
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Live Server: https://flights-server.vercel.app/
+``
