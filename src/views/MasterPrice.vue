@@ -177,7 +177,7 @@ export default {
         .catch((err) => console.log(err));
     },
     allFlights() {
-      fetch("http://localhost:5000/allflights")
+      fetch("http://flights-server.vercel.app/allflights")
         .then((res) => res.json())
         .then((data) => {
           if (data.length > 0) {
