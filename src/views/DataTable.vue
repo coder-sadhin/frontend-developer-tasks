@@ -25,44 +25,70 @@ export default {
       <tbody>
         <tr v-for="(flight, index) of flights" :key="index">
           <td>
-            <p>
-              {{ flight.itineraries[0].segments[0].carrierCode }}
-              {{ flight.itineraries[0].segments[0].flightNumber }}
-            </p>
-            <p>
-              {{ flight.itineraries[0].segments[1].carrierCode }}
-              {{ flight.itineraries[0].segments[1].flightNumber }}
-            </p>
+            <span
+              v-for="(itinerarie, index) of flight.itineraries"
+              :key="index"
+            >
+              <p v-for="(segment, index) of itinerarie.segments" :key="index">
+                {{ segment.carrierCode }}
+                {{ segment.flightNumber }}
+              </p>
+            </span>
           </td>
           <td>
-            <p>{{ flight.itineraries[0].segments[0].aircraft }}</p>
-            <p>{{ flight.itineraries[0].segments[1].aircraft }}</p>
+            <span
+              v-for="(itinerarie, index) of flight.itineraries"
+              :key="index"
+            >
+              <p v-for="(segment, index) of itinerarie.segments" :key="index">
+                {{ segment.aircraft }}
+              </p>
+            </span>
           </td>
           <td>
-            <p>{{ flight.class[0][0] }}</p>
-            <p>{{ flight.class[0][1] }}</p>
+            <span v-for="(classes, index) of flight.class" :key="index">
+              <p v-for="(c, index) of classes" :key="index">
+                {{ c }}
+              </p>
+            </span>
           </td>
           <td>
-            <p>{{ flight.fareBasis[0][0] }}</p>
-            <p>{{ flight.fareBasis[0][1] }}</p>
+            <span v-for="(fareBasic, index) of flight.fareBasis" :key="index">
+              <p v-for="(fare, index) of fareBasic" :key="index">
+                {{ fare }}
+              </p>
+            </span>
           </td>
           <td>
-            <p>
-              {{ flight.itineraries[0].segments[0].departure.iataCode }} -
-              {{ flight.itineraries[0].segments[0].arrival.iataCode }}
-            </p>
-            <p>
-              {{ flight.itineraries[0].segments[1].departure.iataCode }} -
-              {{ flight.itineraries[0].segments[1].arrival.iataCode }}
-            </p>
+            <span
+              v-for="(itinerarie, index) of flight.itineraries"
+              :key="index"
+            >
+              <p v-for="(segment, index) of itinerarie.segments" :key="index">
+                {{ segment.departure.iataCode }}
+                {{ segment.arrival.iataCode }}
+              </p>
+            </span>
           </td>
           <td>
-            <p>{{ flight.itineraries[0].segments[0].departure.at }}</p>
-            <p>{{ flight.itineraries[0].segments[1].departure.at }}</p>
+            <span
+              v-for="(itinerarie, index) of flight.itineraries"
+              :key="index"
+            >
+              <p v-for="(segment, index) of itinerarie.segments" :key="index">
+                {{ segment.departure.at }}
+              </p>
+            </span>
           </td>
           <td>
-            <p>{{ flight.itineraries[0].segments[0].arrival.at }}</p>
-            <p>{{ flight.itineraries[0].segments[1].arrival.at }}</p>
+            <span
+              v-for="(itinerarie, index) of flight.itineraries"
+              :key="index"
+            >
+              <p v-for="(segment, index) of itinerarie.segments" :key="index">
+                {{ segment.arrival.at }}
+              </p>
+            </span>
           </td>
           <td>{{ flight.itineraries[0].duration }}</td>
           <td class="flex flex-col">

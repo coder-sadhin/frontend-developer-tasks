@@ -61,10 +61,36 @@
           <option value="2022-11-23">2022-11-23</option>
           <option value="2022-11-24">2022-11-24</option>
         </select>
-        <span className=" ml-10">
-          <button type="submit" className="btn btn-primary">SEARCH</button>
-        </span>
+        <button
+          class="
+            bg-blue-600
+            hover:bg-blue-800
+            text-white
+            font-bold
+            py-3
+            px-5
+            ml-5
+            rounded
+          "
+        >
+          SEARCH
+        </button>
       </form>
+      <button
+        class="
+          bg-blue-600
+          hover:bg-blue-800
+          text-white
+          font-bold
+          py-3
+          px-16
+          ml-5
+          rounded
+        "
+        @click="allFlights"
+      >
+        Show All Flight
+      </button>
     </div>
     <hr class="border-1 border-blue-800 cursor-pointer duration-500" />
     <div v-if="tableView">
@@ -134,6 +160,24 @@ export default {
         },
         body: JSON.stringify(data),
       })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.length > 0) {
+            this.flights = [...data];
+            console.log(data);
+            this.dataSearch = false;
+            this.tableView = true;
+            this.noData = false;
+          } else {
+            this.noData = true;
+            this.tableView = false;
+            this.dataSearch = false;
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    allFlights() {
+      fetch("http://localhost:5000/allflights")
         .then((res) => res.json())
         .then((data) => {
           if (data.length > 0) {
